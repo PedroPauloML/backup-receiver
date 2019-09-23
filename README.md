@@ -5,8 +5,8 @@ similars backups. This application work with data format JSON.
 
 ## Prerequisites
 
-Sinatra: `gem install sinatra`
-Ngrok: (https://ngrok.com/download)[https://ngrok.com/download].
+- Sinatra: `gem install sinatra`
+- Ngrok: (https://ngrok.com/download)[https://ngrok.com/download].
 
 ## Getting started
 
@@ -32,12 +32,16 @@ data = JSON.parse({
 }.to_json)
 
 ngrok_route = "[ngrok route]"
+
 url = URI.parse(ngrok_route + "/backups")
 req = Net::HTTP::Post.new(url.request_uri)
 req.set_form_data(data)
+
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = (url.scheme == "https")
+
 response = http.request(req)
+
 if response.code == "200"
   body = JSON.parse(response.body)
   `open #{ngrok_route + body["file_uri"]}`
