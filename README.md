@@ -6,7 +6,7 @@ similars backups. This application work with data format JSON.
 ## Prerequisites
 
 - Sinatra: `gem install sinatra`
-- Ngrok: (https://ngrok.com/download)[https://ngrok.com/download].
+- Ngrok: [ngrok](https://ngrok.com/download).
 
 ## Getting started
 

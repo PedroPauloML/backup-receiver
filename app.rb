@@ -12,7 +12,7 @@ end
 
 post '/backups' do
   # PARAMETERS STRUCTURE
-  # 
+  #
   # {
   #   "data": {
   #     "filename": "...",
@@ -20,6 +20,26 @@ post '/backups' do
   #     "key2": "value2",
   #   }
   # }
+
+  # CALLING
+  # require 'net/http'
+  # require 'net/https' # for ruby 1.8.7
+  # require 'json'
+
+  # json = JSON.parse({
+  #   data: {
+  #     filename: "data",
+  #     data: data,
+  #   }.to_json
+  # }.to_json)
+
+  # url = URI.parse(ngrok_route + "/backups")
+  # req = Net::HTTP::Post.new(url.request_uri)
+  # req.set_form_data(json)
+  # http = Net::HTTP.new(url.host, url.port)
+  # http.use_ssl = (url.scheme == "https")
+
+  # response = http.request(req)
 
   content_type :json
 
@@ -29,7 +49,7 @@ post '/backups' do
     if data["filename"].present?
       directory_name = File.join(File.dirname(__FILE__), "backups")
       Dir.mkdir(directory_name) unless File.exists?(directory_name)
-      
+
       data_file_name = data["filename"].parameterize
       file_name = "#{Time.now.strftime("%y%m%d%H%M%S")}-#{data_file_name}.json"
       file_path = File.join(
@@ -37,7 +57,7 @@ post '/backups' do
         "backups",
         file_name
       )
-      
+
       data.delete("filename")
 
       data = { data_file_name.to_s => data }
